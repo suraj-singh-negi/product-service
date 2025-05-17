@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: product-backend
+  datasource:
+    url: jdbc:h2:mem:product
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
