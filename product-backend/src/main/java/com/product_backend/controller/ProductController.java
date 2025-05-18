@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.product_backend.dto.ProductDTO;
 import com.product_backend.service.ProductService;
 
+import org.springframework.http.MediaType;
+
 @RestController
 @RequestMapping("/api/v1")
 public class ProductController {
@@ -27,48 +29,50 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> createProduct(@RequestBody ProductDTO productDto){
         logger.info("Start adding product : {}", productDto);
         ProductDTO product = productService.createdProduct(productDto);
-        return ResponseEntity.ok(product);
+        return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> deleteProduct(@PathVariable("id") String productId){
         logger.info("Start deleting product with id : {}", productId);
         productService.deleteProduct(productId);
-        return ResponseEntity.ok(productId+" deleted");
+        return ResponseEntity.status(HttpStatus.OK).body(productId+" deleted");
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getProduct(@PathVariable("id") String productId){
         logger.info("Start fetching the product with id : {}", productId);
         ProductDTO productDTO = productService.getProduct(productId);
-        return ResponseEntity.ok(productDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(productDTO);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> updateProduct(@PathVariable("id") String productId, 
                                                 ProductDTO productDTO){
         logger.info("Start updating product with id : {} and new product information {}", 
         productId, productDTO);
         ProductDTO updatedProductDto = productService.updateProduct(productId, productDTO);
-        return ResponseEntity.ok(updatedProductDto);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedProductDto);
     }
 
-    @GetMapping
+    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getAllProducts(){
         logger.info("Start fetching all product");
         List<ProductDTO> productDTOList = productService.getAllProducts();
-        return ResponseEntity.ok(productDTOList);
+        return ResponseEntity.status(HttpStatus.OK).body(productDTOList);
     }
 
-    @DeleteMapping
+    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> deleteMultipleProduct(@RequestBody List<String> productIds){
         logger.info("Start deleting all products with id : {}", productIds);
         productService.deleteMultipleProduct(productIds);
-        return ResponseEntity.ok("Deleted multiple product ids");
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted multiple product ids");
     }
     
 }
