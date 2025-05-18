@@ -1,9 +1,9 @@
-package com.product.product_backend.mapper;
+package com.product_backend.mapper;
 
 import org.mapstruct.Mapper;
 
-import com.product.product_backend.dto.ProductDTO;
-import com.product.product_backend.entity.Product;
+import com.product_backend.dto.ProductDTO;
+import com.product_backend.entity.Product;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {

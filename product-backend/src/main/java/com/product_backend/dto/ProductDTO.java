@@ -1,4 +1,4 @@
-package com.product.product_backend.dto;
+package com.product_backend.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
