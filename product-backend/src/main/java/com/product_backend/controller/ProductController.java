@@ -2,6 +2,8 @@ package com.product_backend.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,41 +22,51 @@ import com.product_backend.service.ProductService;
 @RequestMapping("/api/v1")
 public class ProductController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
     @Autowired
     private ProductService productService;
 
     @PostMapping
     public ResponseEntity<Object> createProduct(@RequestBody ProductDTO productDto){
+        logger.info("Start adding product : {}", productDto);
         ProductDTO product = productService.createdProduct(productDto);
         return ResponseEntity.ok(product);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteProduct(@PathVariable("id") String productId){
+        logger.info("Start deleting product with id : {}", productId);
         productService.deleteProduct(productId);
         return ResponseEntity.ok(productId+" deleted");
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getProduct(@PathVariable("id") String productId){
+        logger.info("Start fetching the product with id : {}", productId);
         ProductDTO productDTO = productService.getProduct(productId);
         return ResponseEntity.ok(productDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateProduct(@PathVariable("id") String productIdString, 
+    public ResponseEntity<Object> updateProduct(@PathVariable("id") String productId, 
                                                 ProductDTO productDTO){
-        ProductDTO updatedProductDto = productService.updateProduct(productIdString, productDTO);
+        logger.info("Start updating product with id : {} and new product information {}", 
+        productId, productDTO);
+        ProductDTO updatedProductDto = productService.updateProduct(productId, productDTO);
         return ResponseEntity.ok(updatedProductDto);
     }
 
     @GetMapping
     public ResponseEntity<Object> getAllProducts(){
+        logger.info("Start fetching all product");
         List<ProductDTO> productDTOList = productService.getAllProducts();
         return ResponseEntity.ok(productDTOList);
     }
 
+    @DeleteMapping
     public ResponseEntity<Object> deleteMultipleProduct(@RequestBody List<String> productIds){
+        logger.info("Start deleting all products with id : {}", productIds);
         productService.deleteMultipleProduct(productIds);
         return ResponseEntity.ok("Deleted multiple product ids");
     }
