@@ -56,7 +56,7 @@ public class ProductController {
 
     public ResponseEntity<Object> deleteMultipleProduct(@RequestBody List<String> productIds){
         productService.deleteMultipleProduct(productIds);
-        return ResponseEntity.ok("Deleted multiple product ids")
+        return ResponseEntity.ok("Deleted multiple product ids");
     }
     
 }
