@@ -1,4 +1,4 @@
-package com.product.product_backend.service;
+package com.product_backend.service;
 
 import java.util.List;
 import java.util.UUID;
@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.product.product_backend.dto.ProductDTO;
-import com.product.product_backend.entity.Product;
-import com.product.product_backend.mapper.ProductMapper;
-import com.product.product_backend.repository.ProductRepository;
+import com.product_backend.dto.ProductDTO;
+import com.product_backend.entity.Product;
+import com.product_backend.mapper.ProductMapper;
+import com.product_backend.repository.ProductRepository;
 
 @Service
 public class ProductService {

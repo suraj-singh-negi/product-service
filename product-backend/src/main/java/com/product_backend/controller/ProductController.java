@@ -1,4 +1,4 @@
-package com.product.product_backend.controllers;
+package com.product_backend.controller;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.product.product_backend.dto.ProductDTO;
-import com.product.product_backend.service.ProductService;
+import com.product_backend.dto.ProductDTO;
+import com.product_backend.service.ProductService;
 
 @RestController
 @RequestMapping("/api/v1")

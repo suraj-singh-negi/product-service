@@ -1,4 +1,4 @@
-package com.product.product_backend.entity;
+package com.product_backend.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
