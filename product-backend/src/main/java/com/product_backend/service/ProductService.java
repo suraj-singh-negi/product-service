@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import com.product_backend.repository.ProductRepository;
 
 @Service
 public class ProductService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
     
     @Autowired
     private ProductRepository productRepository;
@@ -21,19 +25,22 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    public ProductDTO createdProduct(ProductDTO productDto){
-        Product product = productMapper.toEntity(productDto);
+    public ProductDTO createdProduct(ProductDTO productDTO){
+        Product product = productMapper.toEntity(productDTO);
         String productId = UUID.randomUUID().toString();
         product.setProductId(productId);
+        logger.info("Saving product: {} in database", productDTO);
         Product savedProduct = productRepository.save(product);
         return productMapper.toDto(savedProduct);
     }
 
     public void deleteProduct(String productId){
+        logger.info("Deleting product with id: {}", productId);
         productRepository.deleteById(productId); 
     }
 
     public ProductDTO getProduct(String productId){
+        logger.info("Fetching product from DB with id: {}", productId);
         Product product = productRepository.getById(productId);
         ProductDTO productDTO = productMapper.toDto(product);
         return productDTO;
@@ -42,12 +49,14 @@ public class ProductService {
     public ProductDTO updateProduct(String productId, ProductDTO productDTO){
         Product product = productMapper.toEntity(productDTO);
         product.setProductId(productId);
+        logger.info("Updating product: {} in DB", productDTO);
         Product updatedProduct = productRepository.save(product);
         ProductDTO updatedProductDTO = productMapper.toDto(updatedProduct);
         return updatedProductDTO;
     }
 
     public List<ProductDTO> getAllProducts(){
+        logger.info("Fetching all products from DB");
         List<Product> productList = productRepository.findAll();
         List<ProductDTO> productDTOList = productList.stream()
                                                         .map(p->productMapper.toDto(p))
@@ -56,6 +65,7 @@ public class ProductService {
     }
 
     public void deleteMultipleProduct(List<String> productIds){
+        logger.info("Deleting all products from DB with Ids: {}", productIds);
         productIds.stream()
                     .forEach(pId->productRepository.deleteById(pId));
     }
