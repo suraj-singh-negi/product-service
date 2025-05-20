@@ -1,6 +1,7 @@
 package com.product_backend.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.product_backend.dto.ProductDTO;
 import com.product_backend.entity.Product;
+import com.product_backend.exception.custom.ProductException;
 import com.product_backend.mapper.ProductMapper;
 import com.product_backend.repository.ProductRepository;
 
@@ -41,8 +43,13 @@ public class ProductService {
 
     public ProductDTO getProduct(String productId){
         logger.info("Fetching product from DB with id: {}", productId);
-        Product product = productRepository.getById(productId);
-        ProductDTO productDTO = productMapper.toDto(product);
+        Optional<Product> product = productRepository.findById(productId);
+        if(!product.isPresent()){
+            String message = String.format("Product with id : %s does not exists.", productId);
+            logger.error(message);
+            throw new ProductException(message);
+        }
+        ProductDTO productDTO = productMapper.toDto(product.get());
         return productDTO;
     }
 
