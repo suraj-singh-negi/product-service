@@ -36,7 +36,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse> createProduct(@RequestBody ProductDTO productDTO){
+    public ResponseEntity<ApiResponse<?>> createProduct(@RequestBody ProductDTO productDTO){
         Objects.requireNonNull(productDTO, "Product cannot be null");
         logger.info("Start adding product : {}", productDTO);
         ProductDTO product = productService.createdProduct(productDTO);
@@ -45,7 +45,7 @@ public class ProductController {
     }
 
     @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse> deleteProduct(@PathVariable("id") String productId){
+    public ResponseEntity<ApiResponse<?>> deleteProduct(@PathVariable("id") String productId){
         logger.info("Start deleting product with id : {}", productId);
         productService.deleteProduct(productId);
         return ResponseEntity.status(HttpStatus.OK)
@@ -54,7 +54,7 @@ public class ProductController {
 
     @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse> getProduct(@PathVariable("id") String productId){
+    public ResponseEntity<ApiResponse<?>> getProduct(@PathVariable("id") String productId){
         logger.info("Start fetching the product with id : {}", productId);
         ProductDTO productDTO = productService.getProduct(productId);
         return ResponseEntity.status(HttpStatus.OK)
@@ -63,18 +63,18 @@ public class ProductController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse> updateProduct(@PathVariable("id") String productId, 
+    public ResponseEntity<ApiResponse<?>> updateProduct(@PathVariable("id") String productId, 
                                                 @RequestBody ProductDTO productDTO){
         Objects.requireNonNull(productDTO, "Product cannot be null");
         logger.info("Start updating product with id : {} and new product information {}", 
         productId, productDTO);
         ProductDTO updatedProductDto = productService.updateProduct(productId, productDTO);
         return ResponseEntity.status(HttpStatus.OK)
-        .body(new ApiResponse<ProductDTO>(true, "Product is updated successfully", productDTO));
+        .body(new ApiResponse<ProductDTO>(true, "Product is updated successfully", updatedProductDto));
     }
 
     @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse> getAllProducts(
+    public ResponseEntity<ApiResponse<?>> getAllProducts(
         @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
         @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize){
         logger.info("Start fetching all product");
@@ -84,7 +84,7 @@ public class ProductController {
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse> deleteMultipleProduct(@RequestBody List<String> productIds){
+    public ResponseEntity<ApiResponse<?>> deleteMultipleProduct(@RequestBody List<String> productIds){
         logger.info("Start deleting all products with id : {}", productIds);
         productService.deleteMultipleProduct(productIds);
         return ResponseEntity.status(HttpStatus.OK)

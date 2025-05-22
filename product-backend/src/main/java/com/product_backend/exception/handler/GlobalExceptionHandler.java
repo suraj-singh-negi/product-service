@@ -11,7 +11,7 @@ import com.product_backend.response.ApiResponse;
 public class GlobalExceptionHandler {
     
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse> handeThrowableException(Exception e){
+    public ResponseEntity<ApiResponse<?>> handeThrowableException(Exception e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
         .body(new ApiResponse<>(false, e.getMessage(), null));
     }
