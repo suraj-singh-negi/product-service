@@ -22,9 +22,13 @@ import com.product_backend.dto.ProductDTO;
 import com.product_backend.response.ApiResponse;
 import com.product_backend.service.ProductService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+@Tag(name = "Product API")
 @Validated
 @RestController
 @RequestMapping("/api/v1")
@@ -35,6 +39,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Operation(summary = "Create a product", description = "This endpoint creates a product.")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> createProduct(@RequestBody ProductDTO productDTO){
         Objects.requireNonNull(productDTO, "Product cannot be null");
@@ -44,6 +49,7 @@ public class ProductController {
         .body(new ApiResponse<ProductDTO>(true, "Product created successfully", product));
     }
 
+    @Operation(summary = "Delete a product", description = "This endpoint deletes a product with given product id.")
     @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> deleteProduct(@PathVariable("id") String productId){
         logger.info("Start deleting product with id : {}", productId);
@@ -52,6 +58,7 @@ public class ProductController {
         .body(new ApiResponse<>(true, productId+" deleted", null));
     }
 
+    @Operation( summary = "Get a product", description = "This endpoint fetchs a product with given product id.")
     @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> getProduct(@PathVariable("id") String productId){
@@ -61,6 +68,7 @@ public class ProductController {
         .body(new ApiResponse<ProductDTO>(true, "Product fetched successfully", productDTO));
     }
 
+    @Operation( summary = "Update a product", description = "This endpoint updates a product with given product id.")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> updateProduct(@PathVariable("id") String productId, 
@@ -73,6 +81,7 @@ public class ProductController {
         .body(new ApiResponse<ProductDTO>(true, "Product is updated successfully", updatedProductDto));
     }
 
+    @Operation( summary = "Get all products", description = "This endpoint fetches all products." )
     @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> getAllProducts(
         @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
@@ -83,6 +92,7 @@ public class ProductController {
         .body(new ApiResponse<List<ProductDTO>>(true, "All products fetched successfully", productDTOList));
     }
 
+    @Operation( summary = "Delete multiple products", description = "This endpoint deletes all products with given product ids.")
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> deleteMultipleProduct(@RequestBody List<String> productIds){
         logger.info("Start deleting all products with id : {}", productIds);
