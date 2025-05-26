@@ -8,12 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductDTO {
+
     private String productId;
-
     private String productName;
-
     private String productDescription;
-
     private byte[] productImage;
     
 }
