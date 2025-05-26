@@ -31,7 +31,7 @@ import org.springframework.http.MediaType;
 @Tag(name = "Product API")
 @Validated
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/product")
 public class ProductController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -45,7 +45,7 @@ public class ProductController {
         Objects.requireNonNull(productDTO, "Product cannot be null");
         logger.info("Start adding product : {}", productDTO);
         ProductDTO product = productService.createdProduct(productDTO);
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(HttpStatus.CREATED)
         .body(new ApiResponse<ProductDTO>(true, "Product created successfully", product));
     }
 
