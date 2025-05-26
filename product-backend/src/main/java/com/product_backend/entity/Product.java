@@ -8,11 +8,13 @@ import javax.persistence.Lob;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import javax.persistence.Table;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "Product")
 public class Product {
     @Id
     @Column(name="product_id")
@@ -21,6 +23,7 @@ public class Product {
     @Column(name="product_name")
     private String productName;
 
+    @Column(name="product_description")
     private String productDescription;
 
     @Lob
