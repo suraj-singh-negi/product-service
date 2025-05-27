@@ -39,7 +39,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @Operation(summary = "Create a product", description = "This endpoint creates a product.")
+    @Operation(summary = "Create a new product", description = "This endpoint creates a product.")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> createProduct(@RequestBody ProductDTO productDTO){
         Objects.requireNonNull(productDTO, "Product cannot be null");
