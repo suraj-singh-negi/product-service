@@ -55,7 +55,7 @@ public class ProductController {
         logger.info("Start deleting product with id : {}", productId);
         productService.deleteProduct(productId);
         return ResponseEntity.status(HttpStatus.OK)
-        .body(new ApiResponse<>(true, productId+" deleted", null));
+        .body(new ApiResponse<>(true, "Product deleted", null));
     }
 
     @Operation( summary = "Get a product", description = "This endpoint fetchs a product with given product id.")
