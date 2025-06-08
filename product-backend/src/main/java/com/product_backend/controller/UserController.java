@@ -20,9 +20,11 @@ import com.product_backend.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import static com.product_backend.utility.Constants.API_V1;
+
 @Tag(name = "User API")
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping(API_V1+"/user")
 public class UserController {
 
     @Autowired
