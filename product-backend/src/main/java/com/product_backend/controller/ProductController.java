@@ -28,10 +28,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import static com.product_backend.utility.Constants.API_V1;
+
 @Tag(name = "Product API")
 @Validated
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping(API_V1+"/product")
 public class ProductController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
