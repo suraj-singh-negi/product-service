@@ -10,7 +10,6 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;

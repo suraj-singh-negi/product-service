@@ -1,7 +1,5 @@
 package com.product_backend.dto;
 
-import javax.persistence.Column;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
