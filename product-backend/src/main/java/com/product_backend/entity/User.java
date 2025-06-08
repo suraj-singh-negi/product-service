@@ -20,10 +20,13 @@ public class User {
     @Column(name = "user_id")
     private String userId;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "role")
+    private String role;
 
 }
