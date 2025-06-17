@@ -5,7 +5,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
-@ConditionalOnProperty(prefix = "product_service.kafka", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(name = "product_service.kafka.enabled", havingValue = "true", matchIfMissing = false)
 public class KafkaConsumer {
     
     @KafkaListener(
