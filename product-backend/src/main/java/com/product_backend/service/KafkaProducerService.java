@@ -6,7 +6,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-@ConditionalOnProperty(prefix = "product_service.kafka", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(name = "product_service.kafka.enabled", havingValue = "true", matchIfMissing = false)
 public class KafkaProducerService {
 
     private KafkaTemplate<String, String> kafkaTemplate;

@@ -18,7 +18,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 
 @Configuration
-@ConditionalOnProperty(prefix = "product_service.kafka", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(name = "product_service.kafka.enabled", havingValue = "true", matchIfMissing = false)
 public class KafkaConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
