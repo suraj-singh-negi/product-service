@@ -74,7 +74,13 @@ public class ProductService {
     public void deleteMultipleProduct(List<String> productIds){
         logger.info("Deleting all products from DB with Ids: {}", productIds);
         productIds.stream()
-                    .forEach(pId->productRepository.deleteById(pId));
+                    .forEach(pId->{
+                        try{
+                            productRepository.deleteById(pId);
+                        }catch(Exception ex){
+                            logger.error("Product id {} can't be deleted", pId);
+                        }
+                    });    
     }
 
 }

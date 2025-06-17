@@ -55,10 +55,12 @@ public class UserController {
         @PathVariable("userId") String userId, @RequestBody UserDTO userDTO){
         UserDTO updatedUserDTO = userService.updateUser(userId, userDTO);
         return new ResponseEntity<>(
-            new ApiResponse<>(true, "User updated succesfully", updatedUserDTO), HttpStatus.OK);
+            new ApiResponse<>(true, 
+                "User updated succesfully", updatedUserDTO), HttpStatus.OK);
     }
 
-    @Operation(summary = "Delete a user", description = "This endpoint deletes a user with given user id.")
+    @Operation(summary = "Delete a user", 
+        description = "This endpoint deletes a user with given user id.")
     @DeleteMapping(value = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> deleteUser(@PathVariable("userId") String userId){

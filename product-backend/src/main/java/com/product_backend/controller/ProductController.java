@@ -51,26 +51,29 @@ public class ProductController {
         .body(new ApiResponse<ProductDTO>(true, "Product created successfully", product));
     }
 
-    @Operation(summary = "Delete a product", description = "This endpoint deletes a product with given product id.")
-    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Delete a product", 
+        description = "This endpoint deletes a product with given product id.")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<ApiResponse<?>> deleteProduct(@PathVariable("id") String productId){
         logger.info("Start deleting product with id : {}", productId);
         productService.deleteProduct(productId);
         return ResponseEntity.status(HttpStatus.OK)
-        .body(new ApiResponse<>(true, "Product deleted", null));
+        .body(new ApiResponse<>(true, "Product deleted successfully", null));
     }
 
-    @Operation( summary = "Get a product", description = "This endpoint fetchs a product with given product id.")
-    @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation( summary = "Get a product", 
+        description = "This endpoint fetchs a product with given product id.")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> getProduct(@PathVariable("id") String productId){
         logger.info("Start fetching the product with id : {}", productId);
         ProductDTO productDTO = productService.getProduct(productId);
         return ResponseEntity.status(HttpStatus.OK)
-        .body(new ApiResponse<ProductDTO>(true, "Product fetched successfully", productDTO));
+        .body(new ApiResponse<ProductDTO>(true, 
+            "Product fetched successfully", productDTO));
     }
 
-    @Operation( summary = "Update a product", description = "This endpoint updates a product with given product id.")
+    @Operation( summary = "Update a product", 
+        description = "This endpoint updates a product with given product id.")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> updateProduct(@PathVariable("id") String productId, 
@@ -80,21 +83,24 @@ public class ProductController {
         productId, productDTO);
         ProductDTO updatedProductDto = productService.updateProduct(productId, productDTO);
         return ResponseEntity.status(HttpStatus.OK)
-        .body(new ApiResponse<ProductDTO>(true, "Product is updated successfully", updatedProductDto));
+        .body(new ApiResponse<ProductDTO>(true, 
+            "Product updated successfully", updatedProductDto));
     }
 
     @Operation( summary = "Get all products", description = "This endpoint fetches all products." )
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> getAllProducts(
         @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
         @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize){
         logger.info("Start fetching all product");
         List<ProductDTO> productDTOList = productService.getAllProducts();
         return ResponseEntity.status(HttpStatus.OK)
-        .body(new ApiResponse<List<ProductDTO>>(true, "All products fetched successfully", productDTOList));
+        .body(new ApiResponse<List<ProductDTO>>(true, 
+            "All products fetched successfully", productDTOList));
     }
 
-    @Operation( summary = "Delete multiple products", description = "This endpoint deletes all products with given product ids.")
+    @Operation( summary = "Delete multiple products", 
+        description = "This endpoint deletes all products with given product ids.")
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> deleteMultipleProduct(@RequestBody List<String> productIds){
         logger.info("Start deleting all products with id : {}", productIds);

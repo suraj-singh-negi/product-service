@@ -91,7 +91,7 @@ public class ProductControllerTest {
 
     @Test
     public void updateProductTest(){
-        String message = "Product is updated successfully";
+        String message = "Product updated successfully";
         when(productService.updateProduct(anyString(), any(ProductDTO.class))).thenReturn(getOutputProductDTO());
         ResponseEntity<ApiResponse<?>> response = productController.updateProduct(productId, getInputProductDTO());
         ProductDTO productDTO = (ProductDTO)response.getBody().getData();
