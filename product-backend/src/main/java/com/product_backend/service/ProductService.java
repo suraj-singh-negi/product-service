@@ -28,17 +28,31 @@ public class ProductService {
     private ProductMapper productMapper;
 
     public ProductDTO createdProduct(ProductDTO productDTO){
-        Product product = productMapper.toEntity(productDTO);
-        String productId = UUID.randomUUID().toString();
-        product.setProductId(productId);
         logger.info("Saving product: {} in database", productDTO);
-        Product savedProduct = productRepository.save(product);
-        return productMapper.toDto(savedProduct);
+        try{
+            Product product = productMapper.toEntity(productDTO);
+            String productId = UUID.randomUUID().toString();
+            product.setProductId(productId);
+            Product savedProduct = productRepository.save(product);
+            return productMapper.toDto(savedProduct);
+        }catch(Exception ex){
+            String message = String.format("Failed to save product {}", productDTO);
+            logger.error(message);
+            throw new ProductException(message);
+        }
+        
     }
 
     public void deleteProduct(String productId){
-        logger.info("Deleting product with id: {}", productId);
-        productRepository.deleteById(productId); 
+        try{
+            logger.info("Deleting product with id: {}", productId);
+            productRepository.deleteById(productId); 
+        }catch(Exception ex){
+            String message = String.format("Failed to delete product id {}", productId);
+            logger.error(message);
+            throw new ProductException(message);
+        }
+        
     }
 
     public ProductDTO getProduct(String productId){
@@ -54,21 +68,35 @@ public class ProductService {
     }
 
     public ProductDTO updateProduct(String productId, ProductDTO productDTO){
-        Product product = productMapper.toEntity(productDTO);
-        product.setProductId(productId);
-        logger.info("Updating product: {} in DB", productDTO);
-        Product updatedProduct = productRepository.save(product);
-        ProductDTO updatedProductDTO = productMapper.toDto(updatedProduct);
-        return updatedProductDTO;
+        try{
+            logger.info("Updating product: {} in DB", productDTO);
+            Product product = productMapper.toEntity(productDTO);
+            product.setProductId(productId);
+            Product updatedProduct = productRepository.save(product);
+            ProductDTO updatedProductDTO = productMapper.toDto(updatedProduct);
+            return updatedProductDTO;
+        }catch(Exception ex){
+            String message = String.format("Error occured while updating product id {}", productId);
+            logger.error(message);
+            throw new ProductException(message);
+        }
+        
+        
     }
 
     public List<ProductDTO> getAllProducts(){
-        logger.info("Fetching all products from DB");
-        List<Product> productList = productRepository.findAll();
-        List<ProductDTO> productDTOList = productList.stream()
-                                                        .map(p->productMapper.toDto(p))
-                                                        .collect(Collectors.toList());
-        return productDTOList;
+        try{
+            logger.info("Fetching all products from DB");
+            List<Product> productList = productRepository.findAll();
+            List<ProductDTO> productDTOList = productList.stream().map(p->productMapper.toDto(p))
+                                                .collect(Collectors.toList());
+            return productDTOList;
+        }catch(Exception ex){
+            String message = "Error occured while fetching all product details";
+            logger.error(message);
+            throw new ProductException(message);
+        }
+        
     }
 
     public void deleteMultipleProduct(List<String> productIds){
